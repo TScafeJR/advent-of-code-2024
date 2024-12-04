@@ -4,7 +4,7 @@ Taking a stab at this in rust this year.
 
 Example run
 
-```rust
+```shell
 cargo run -- <day> <part>
 ```
 

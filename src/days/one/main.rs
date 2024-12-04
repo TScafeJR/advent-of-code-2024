@@ -1,5 +1,5 @@
-use regex::Regex;
 use crate::days::Day;
+use regex::Regex;
 use std::collections::HashMap;
 
 fn part1(data: Vec<String>) -> () {
@@ -51,11 +51,11 @@ fn part2(data: Vec<String>) -> () {
 
         row_2.push(results[1]);
     }
-    
-    for i in 0..row_2.len(){
-        if occur_map.contains_key(&row_2[i]){
+
+    for i in 0..row_2.len() {
+        if occur_map.contains_key(&row_2[i]) {
             occur_map.entry(row_2[i]).and_modify(|occur| *occur += 1);
-        } 
+        }
     }
 
     let mut result = 0;
@@ -70,6 +70,6 @@ fn part2(data: Vec<String>) -> () {
 pub fn functions() -> Day {
     Day {
         part1: Some(part1),
-        part2: Some(part2)
+        part2: Some(part2),
     }
 }
