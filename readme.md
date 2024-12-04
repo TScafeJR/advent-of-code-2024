@@ -8,5 +8,5 @@ Example run
 cargo run -- <day> <part>
 ```
 
-<b>Note:</b>
-On my personal machine, I'm storing this project in /Users/\<usr\>/rust/code-advent-2024.
+<b>Note for self:</b>
+On my personal machine, I'm storing this project in `/Users/<usr>/rust/code-advent-2024`.
