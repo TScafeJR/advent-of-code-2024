@@ -1,6 +1,6 @@
 use crate::days::Day;
-use regex::Regex;
 use crate::util::arrays;
+use regex::Regex;
 
 #[derive(PartialEq, Debug)]
 enum Direction {
@@ -42,12 +42,13 @@ fn row_safe(row: &Vec<i64>) -> bool {
             if new_direction == Direction::INVALID {
                 return false;
             }
-
         } else {
-            if new_direction == Direction::INVALID || direction == Direction::INVALID || direction != new_direction {
+            if new_direction == Direction::INVALID
+                || direction == Direction::INVALID
+                || direction != new_direction
+            {
                 return false;
             }
-
         }
 
         if (n1 - n2).abs() > max_diff {
@@ -81,9 +82,8 @@ fn part2(data: Vec<String>) -> () {
         let row = parse_row(&data[i]);
         if row_safe(&row) {
             result += 1;
-            continue
+            continue;
         }
-
 
         for j in 0..row.len() {
             let row_copy = row.clone();
