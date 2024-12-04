@@ -23,7 +23,6 @@ fn get_data(args: &Submission) -> Vec<String>{
         panic!("Day {} is not supported.", args.day);
     });
     let data_path = PathBuf::from(format!("src/days/{}/data/part{}.txt", parsed_day, args.part));
-    println!("Reading data from: {:?}", data_path);
     util::files::read_file_line_by_line(data_path)}
 
 fn get_functions(args: &Submission) -> Option<Day> {
@@ -35,16 +34,20 @@ fn main() {
     let data = get_data(&args);
 
     if let Some(parsed_fns) = get_functions(&args) {
-        if let Some(part1_fn) = parsed_fns.part1 {
-            part1_fn(data.clone());
-        } else {
-            println!("part1 is not defined.");
+        if args.part == 1 {
+            if let Some(part1_fn) = parsed_fns.part1 {
+                part1_fn(data.clone());
+            } else {
+                println!("part1 is not defined for day {}.", args.day);
+            }
         }
 
-        if let Some(part2_fn) = parsed_fns.part2 {
-            part2_fn(data.clone());
-        } else {
-            println!("part2 is not defined.");
+        if args.part == 2 {
+            if let Some(part2_fn) = parsed_fns.part2 {
+                part2_fn(data.clone());
+            } else {
+                println!("part2 is not defined for day {}.", args.day);
+            }
         }
     } else {
         println!("Day {} is not supported.", args.day);
