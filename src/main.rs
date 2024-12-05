@@ -2,22 +2,13 @@ mod days;
 mod util;
 
 use clap::Parser;
-use days::{get_day, Day};
+use days::{get_day, get_day_str, Day};
 use std::path::PathBuf;
 
 #[derive(Parser)]
 struct Submission {
     day: u8,
     part: u8,
-}
-
-fn get_day_str(day: u8) -> Option<String> {
-    match day {
-        1 => Some("one".to_string()),
-        2 => Some("two".to_string()),
-        3 => Some("three".to_string()),
-        _ => None,
-    }
 }
 
 fn get_data(args: &Submission) -> Vec<String> {
