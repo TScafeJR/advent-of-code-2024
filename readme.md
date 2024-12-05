@@ -1,4 +1,4 @@
-## Advent of Code
+## Advent of Code 2024 in Rust
 
 Taking a stab at this in rust this year.
 
