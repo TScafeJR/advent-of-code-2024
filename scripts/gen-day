@@ -1,0 +1,41 @@
+#!/bin/bash
+
+read -p "Enter day name: " -r DAY_NAME;
+
+if [[ -z "$DAY_NAME" ]]; then
+    echo "Day name cannot be empty!"
+    exit 1
+fi
+
+mkdir -p "src/days/$DAY_NAME/data" || { echo "Failed to create directory!"; exit 1; }
+
+touch "src/days/$DAY_NAME/data/part1.txt" || { echo "Failed to create part1.txt"; exit 1; }
+
+touch "src/days/$DAY_NAME/mod.rs" || { echo "Failed to create mod.rs"; exit 1; }
+
+cat > "src/days/$DAY_NAME/mod.rs" <<EOF
+pub mod main;
+
+pub use main::functions;
+EOF
+
+touch "src/days/$DAY_NAME/main.rs"
+
+cat > "src/days/$DAY_NAME/main.rs" <<EOF
+use crate::days::Day;
+
+fn part1(_data: Vec<String>) -> () {
+}
+
+fn part2(_data: Vec<String>) -> () {
+}
+
+pub fn functions() -> Day {
+    Day {
+        part1: Some(part1),
+        part2: Some(part2),
+    }
+}
+EOF
+
+make fix;
