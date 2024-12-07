@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MOD_FILE="src/days/mod.rs"
+
 read -p "Enter day name: " -r DAY_NAME;
 
 if [[ -z "$DAY_NAME" ]]; then
@@ -38,4 +40,19 @@ pub fn functions() -> Day {
 }
 EOF
 
+if ! grep -q "pub mod $DAY_NAME;" "$MOD_FILE"; then
+    sed -i '' "1i\\
+pub mod $DAY_NAME;
+" "$MOD_FILE"
+fi
+
+if ! grep -q "\"$DAY_NAME\".to_string()" "$MOD_FILE"; then
+    sed -i '' "/pub fn get_day_str(day: u8) -> Option<String> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some(\"$DAY_NAME\".to_string()),\\
+        _ => None,/" "$MOD_FILE"
+fi
+
+if ! grep -q "$DAY_NAME::functions()" "$MOD_FILE"; then
+    sed -i '' "/pub fn get_day(day: u8) -> Option<Day> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some($DAY_NAME::functions()),\\
+        _ => None,/" "$MOD_FILE"
+fi
 make fix;
