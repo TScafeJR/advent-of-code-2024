@@ -1,3 +1,4 @@
+pub mod five;
 pub mod four;
 pub mod one;
 pub mod three;
@@ -14,6 +15,7 @@ pub fn get_day_str(day: u8) -> Option<String> {
         2 => Some("two".to_string()),
         3 => Some("three".to_string()),
         4 => Some("four".to_string()),
+        5 => Some("five".to_string()),
         _ => None,
     }
 }
@@ -24,6 +26,7 @@ pub fn get_day(day: u8) -> Option<Day> {
         2 => Some(two::functions()),
         3 => Some(three::functions()),
         4 => Some(four::functions()),
+        5 => Some(five::functions()),
         _ => None,
     }
 }
