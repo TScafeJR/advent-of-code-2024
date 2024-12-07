@@ -4,6 +4,7 @@ mod util;
 use clap::Parser;
 use days::{get_day, get_day_str, Day};
 use std::path::PathBuf;
+use std::time::Instant;
 
 #[derive(Parser)]
 struct Submission {
@@ -27,6 +28,8 @@ fn get_functions(args: &Submission) -> Option<Day> {
 }
 
 fn main() {
+    let start_time = Instant::now();
+
     let args = Submission::parse();
     let data = get_data(&args);
 
@@ -49,4 +52,7 @@ fn main() {
     } else {
         println!("Day {} is not supported.", args.day);
     }
+
+    let elapsed_time = start_time.elapsed(); // End timer
+    println!("Execution time: {:.2?} seconds", elapsed_time);
 }

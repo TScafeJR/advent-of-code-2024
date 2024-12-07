@@ -21,3 +21,7 @@ pub fn rotate_90_clockwise<T: Clone>(matrix: Vec<Vec<T>>) -> Vec<Vec<T>> {
 
     rotated
 }
+
+pub fn convert_str_to_vec(input: &str) -> Vec<char> {
+    input.chars().collect()
+}

@@ -67,6 +67,7 @@ impl<T: Eq + std::hash::Hash + Clone> DirectedGraph<T> {
         self.dfs_reverse_dynamic(&start, &end, &mut visited)
     }
 
+    #[warn(dead_code)]
     pub fn dfs_reverse_dynamic(&self, start: &T, end: &T, visited: &mut HashMap<T, bool>) -> bool {
         if visited.contains_key(start) {
             return false;
