@@ -1,6 +1,6 @@
+use crate::days;
 use crate::util;
 use std::path::PathBuf;
-use crate::days;
 
 #[cfg(test)]
 mod tests {
@@ -18,8 +18,8 @@ mod tests {
                 if let Some(part1_fn) = parsed_fns.part1 {
                     let result = part1_fn(get_data());
                     assert_eq!(result, 11);
-                    return
-                } 
+                    return;
+                }
 
                 panic!("Part 1 is not supported.");
             } else {
@@ -37,8 +37,8 @@ mod tests {
                 if let Some(part2_fn) = parsed_fns.part2 {
                     let result = part2_fn(get_data());
                     assert_eq!(result, 31);
-                    return
-                } 
+                    return;
+                }
 
                 panic!("Part 2 is not supported.");
             } else {
