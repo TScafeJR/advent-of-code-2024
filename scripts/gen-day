@@ -116,6 +116,11 @@ if ! grep -q "$DAY_NAME::functions()" "$MOD_FILE"; then
         _ => None,/" "$MOD_FILE"
 fi
 
+if ! grep -q "\"$DAY_NAME\" => Some(" "$MOD_FILE"; then
+    sed -i '' "/pub fn get_day_from_str(day: &str) -> Option<u8> {/,/}/ s/        _ => None,/        \"$DAY_NAME\" => Some($(($(grep -c '^pub mod' "$MOD_FILE")))),\\
+        _ => None,/" "$MOD_FILE"
+fi
+
 make fix;
 
 git add "src/days/$DAY_NAME";
