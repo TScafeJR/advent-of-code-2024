@@ -5,7 +5,11 @@ Taking a stab at this in rust this year.
 Example run
 
 ```shell
+# run day x part x
 cargo run -- <day> <part>
+
+# run day x part x with test input
+cargo run -- <day> <part> --test
 ```
 
 Generate new day:
