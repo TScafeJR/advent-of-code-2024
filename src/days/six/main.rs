@@ -132,7 +132,6 @@ fn part2(data: Vec<String>) -> () {
         for j in 0..converted_data[i].len() {
             let start = Instant::now();
             let mut iter_data = converted_data.clone();
-            println!("{:?}", (i, j));
             if starting_loc.0 == i && starting_loc.1 == j {
                 continue;
             }
