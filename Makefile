@@ -9,4 +9,8 @@ fix: fmt
 gen-day:
 	@./scripts/gen-day
 
+.PHONY: test
+test:
+	@cargo test
+
 include makefiles/*.mk

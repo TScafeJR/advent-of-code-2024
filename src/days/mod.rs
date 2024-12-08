@@ -11,6 +11,19 @@ pub struct Day {
     pub part2: Option<fn(data: Vec<String>) -> u64>,
 }
 
+pub fn get_day_from_str(day: &str) -> Option<u8> {
+    match day {
+        "one" => Some(1),
+        "two" => Some(2),
+        "three" => Some(3),
+        "four" => Some(4),
+        "five" => Some(5),
+        "six" => Some(6),
+        "seven" => Some(7),
+        _ => None,
+    }
+}
+
 pub fn get_day_str(day: u8) -> Option<String> {
     match day {
         1 => Some("one".to_string()),
