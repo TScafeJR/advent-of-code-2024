@@ -29,7 +29,7 @@ fn is_valid_row(target: i64, nums: &[i64], curr_val: i64, p2: bool) -> bool {
             ));
 }
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mut res = 0;
     for row in data {
         let (target, nums) = parse_input_row(&row);
@@ -39,10 +39,10 @@ fn part1(data: Vec<String>) -> () {
         }
     }
 
-    println!("day 7, part 1: {:?}", res);
+    return res as u64;
 }
 
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let mut res = 0;
     for row in data {
         let (target, nums) = parse_input_row(&row);
@@ -51,7 +51,8 @@ fn part2(data: Vec<String>) -> () {
             res += target;
         }
     }
-    println!("day 7, part 2: {:?}", res);
+
+    return res as u64;
 }
 
 pub fn functions() -> Day {

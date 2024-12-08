@@ -124,7 +124,7 @@ fn special_diagonal_count(data: &Vec<String>, re_fn: fn(d: Direction) -> Regex) 
     return res;
 }
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mut result = 0;
 
     for line in &data {
@@ -135,13 +135,13 @@ fn part1(data: Vec<String>) -> () {
 
     result += diagonal_count(&data, get_xmas_regex);
 
-    println!("day 4, part 1: {:?}", result);
+    return result as u64;
 }
 
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let mut result = 0;
     result += special_diagonal_count(&data, get_mas_regex);
-    println!("day 4, part 2: {:?}", result);
+    return result as u64;
 }
 
 pub fn functions() -> Day {

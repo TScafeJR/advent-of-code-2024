@@ -38,7 +38,8 @@ fn main() {
     if let Some(parsed_fns) = get_functions(&args) {
         if args.part == 1 {
             if let Some(part1_fn) = parsed_fns.part1 {
-                part1_fn(data.clone());
+                let res = part1_fn(data.clone());
+                println!("day {}, part {}: {}", args.day, args.part, res);
             } else {
                 println!("part1 is not defined for day {}.", args.day);
             }
@@ -46,7 +47,8 @@ fn main() {
 
         if args.part == 2 {
             if let Some(part2_fn) = parsed_fns.part2 {
-                part2_fn(data.clone());
+                let res = part2_fn(data.clone());
+                println!("day {}, part {}: {}", args.day, args.part, res);
             } else {
                 println!("part2 is not defined for day {}.", args.day);
             }

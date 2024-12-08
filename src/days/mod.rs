@@ -7,8 +7,8 @@ pub mod three;
 pub mod two;
 
 pub struct Day {
-    pub part1: Option<fn(data: Vec<String>) -> ()>,
-    pub part2: Option<fn(data: Vec<String>) -> ()>,
+    pub part1: Option<fn(data: Vec<String>) -> u64>,
+    pub part2: Option<fn(data: Vec<String>) -> u64>,
 }
 
 pub fn get_day_str(day: u8) -> Option<String> {

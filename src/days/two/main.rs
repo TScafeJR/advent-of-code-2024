@@ -62,7 +62,7 @@ fn row_safe(row: &Vec<i64>) -> bool {
     return true;
 }
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mut result = 0;
 
     for i in 0..data.len() {
@@ -72,10 +72,10 @@ fn part1(data: Vec<String>) -> () {
         }
     }
 
-    println!("day 2, part 1: {:?}", result);
+    return result;
 }
 
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let mut result = 0;
 
     for i in 0..data.len() {
@@ -95,7 +95,7 @@ fn part2(data: Vec<String>) -> () {
         }
     }
 
-    println!("day 2, part 2: {:?}", result);
+    return result;
 }
 
 pub fn functions() -> Day {

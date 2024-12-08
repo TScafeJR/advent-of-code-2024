@@ -1,7 +1,6 @@
 use crate::days::Day;
 use crate::util::arrays;
 use std::collections::HashSet;
-use std::time::Instant;
 
 #[derive(PartialEq, Debug)]
 enum Direction {
@@ -98,7 +97,7 @@ fn handle_step(data: &mut Vec<Vec<char>>, curr_loc: (usize, usize)) -> bool {
     return true;
 }
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mut converted_data: Vec<Vec<char>> =
         data.iter().map(|l| arrays::convert_str_to_vec(l)).collect();
     let mut visited_set: HashSet<(usize, usize)> = HashSet::new();
@@ -117,10 +116,10 @@ fn part1(data: Vec<String>) -> () {
         }
     }
 
-    println!("day 6, part 1: {:?}", visited_set.len())
+    return visited_set.len() as u64;
 }
 
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let converted_data: Vec<Vec<char>> =
         data.iter().map(|l| arrays::convert_str_to_vec(l)).collect();
     let mut num_loops = 0;
@@ -130,7 +129,6 @@ fn part2(data: Vec<String>) -> () {
 
     for i in 0..converted_data.len() {
         for j in 0..converted_data[i].len() {
-            let start = Instant::now();
             let mut iter_data = converted_data.clone();
             if starting_loc.0 == i && starting_loc.1 == j {
                 continue;
@@ -160,13 +158,10 @@ fn part2(data: Vec<String>) -> () {
                 }
             }
             visited_set.clear();
-
-            let duration = start.elapsed();
-            println!("Execution time: {:?}", duration);
         }
     }
 
-    println!("day 6, part 2: {:?}", num_loops)
+    return num_loops;
 }
 
 pub fn functions() -> Day {

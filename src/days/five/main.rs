@@ -121,14 +121,12 @@ fn process_data(
     return sum;
 }
 
-fn part1(data: Vec<String>) -> () {
-    let sum = process_data(data, simple_can_handle_row);
-    println!("day 5, part 1: {:?}", sum);
+fn part1(data: Vec<String>) -> u64 {
+    return process_data(data, simple_can_handle_row);
 }
 
-fn part2(data: Vec<String>) -> () {
-    let sum = process_data(data, can_handle_row_and_fix_row);
-    println!("day 5, part 2: {:?}", sum);
+fn part2(data: Vec<String>) -> u64 {
+    return process_data(data, can_handle_row_and_fix_row);
 }
 
 pub fn functions() -> Day {

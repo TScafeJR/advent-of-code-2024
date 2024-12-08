@@ -2,7 +2,7 @@ use crate::days::Day;
 use regex::Regex;
 use std::collections::HashMap;
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mut row_1: Vec<i64> = vec![];
     let mut row_2: Vec<i64> = vec![];
     let re = Regex::new(r"(\d+)").unwrap();
@@ -27,10 +27,10 @@ fn part1(data: Vec<String>) -> () {
         result += abs_diff;
     }
 
-    println!("day 1, part 1: {:?}", result);
+    return result as u64;
 }
 
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let mut row_1: Vec<i64> = vec![];
     let mut row_2: Vec<i64> = vec![];
     let mut occur_map = HashMap::new();
@@ -64,7 +64,7 @@ fn part2(data: Vec<String>) -> () {
         result += key * value;
     }
 
-    println!("day 1, part 2: {:?}", result);
+    return result as u64;
 }
 
 pub fn functions() -> Day {

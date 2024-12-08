@@ -9,7 +9,7 @@ fn process_mul_row(row: &str) -> u64 {
     n1 * n2
 }
 
-fn part1(data: Vec<String>) -> () {
+fn part1(data: Vec<String>) -> u64 {
     let mul_re = Regex::new(r"mul\(\d+\,\d+\)").unwrap();
     let mut mul_rows: Vec<String> = vec![];
 
@@ -25,12 +25,12 @@ fn part1(data: Vec<String>) -> () {
         result += process_mul_row(&row);
     }
 
-    println!("day 3, part 1: {:?}", result);
+    return result;
 }
 
 // don't NEED a tokenizer: let's try to replace brackets of
 // don't()*do() with an empty string
-fn part2(data: Vec<String>) -> () {
+fn part2(data: Vec<String>) -> u64 {
     let mut input = "".to_owned();
 
     for line in data {
@@ -42,7 +42,7 @@ fn part2(data: Vec<String>) -> () {
 
     let formatted_input = vec![result.to_string()];
 
-    part1(formatted_input);
+    part1(formatted_input)
 }
 
 pub fn functions() -> Day {
