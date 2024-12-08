@@ -61,32 +61,4 @@ impl<T: Eq + std::hash::Hash + Clone> DirectedGraph<T> {
         let mut visited = HashMap::new();
         self.dfs(&start, &end, &mut visited)
     }
-
-    pub fn is_predecessor(&self, start: T, end: T) -> bool {
-        let mut visited = HashMap::new();
-        self.dfs_reverse_dynamic(&start, &end, &mut visited)
-    }
-
-    #[warn(dead_code)]
-    pub fn dfs_reverse_dynamic(&self, start: &T, end: &T, visited: &mut HashMap<T, bool>) -> bool {
-        if visited.contains_key(start) {
-            return false;
-        }
-
-        visited.insert(start.clone(), true);
-
-        if start == end {
-            return true;
-        }
-
-        for (node, neighbors) in &self.nodes {
-            if neighbors.contains(start) {
-                if self.dfs_reverse_dynamic(node, end, visited) {
-                    return true;
-                }
-            }
-        }
-
-        false
-    }
 }

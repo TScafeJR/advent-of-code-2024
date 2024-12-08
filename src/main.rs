@@ -6,20 +6,22 @@ use days::{get_day, get_day_str, Day};
 use std::path::PathBuf;
 use std::time::Instant;
 
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 struct Submission {
     day: u8,
     part: u8,
+    #[clap(short, long, action)]
+    test: bool,
 }
 
 fn get_data(args: &Submission) -> Vec<String> {
     let parsed_day = get_day_str(args.day).unwrap_or_else(|| {
         panic!("Day {} is not supported.", args.day);
     });
-    let data_path = PathBuf::from(format!(
-        "src/days/{}/data/part{}.txt",
-        parsed_day, args.part
-    ));
+
+    let file_name = if args.test { "test" } else { "input" };
+
+    let data_path = PathBuf::from(format!("src/days/{}/data/{}.txt", parsed_day, file_name));
     util::files::read_file_line_by_line(data_path)
 }
 
@@ -53,6 +55,6 @@ fn main() {
         println!("Day {} is not supported.", args.day);
     }
 
-    let elapsed_time = start_time.elapsed(); // End timer
+    let elapsed_time = start_time.elapsed();
     println!("Execution time: {:.2?} seconds", elapsed_time);
 }
