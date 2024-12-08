@@ -15,7 +15,7 @@ cargo run -- <day> <part> --test
 Generate new day:
 
 ```shell
-#will prompt for day - just use english word. for example on day 10, use "ten"
+# will prompt for day - just use english word. for example on day 10, use "ten"
 make gen-day
 ```
 
