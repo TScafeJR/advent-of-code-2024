@@ -1,3 +1,4 @@
+pub mod eight;
 pub mod five;
 pub mod four;
 pub mod one;
@@ -11,6 +12,7 @@ pub struct Day {
     pub part2: Option<fn(data: Vec<String>) -> u64>,
 }
 
+#[cfg(test)]
 pub fn get_day_from_str(day: &str) -> Option<u8> {
     match day {
         "one" => Some(1),
@@ -20,6 +22,7 @@ pub fn get_day_from_str(day: &str) -> Option<u8> {
         "five" => Some(5),
         "six" => Some(6),
         "seven" => Some(7),
+        "eight" => Some(8),
         _ => None,
     }
 }
@@ -33,6 +36,7 @@ pub fn get_day_str(day: u8) -> Option<String> {
         5 => Some("five".to_string()),
         6 => Some("six".to_string()),
         7 => Some("seven".to_string()),
+        8 => Some("eight".to_string()),
         _ => None,
     }
 }
@@ -46,6 +50,7 @@ pub fn get_day(day: u8) -> Option<Day> {
         5 => Some(five::functions()),
         6 => Some(six::functions()),
         7 => Some(seven::functions()),
+        8 => Some(eight::functions()),
         _ => None,
     }
 }

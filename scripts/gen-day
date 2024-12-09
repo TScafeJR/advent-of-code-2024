@@ -30,14 +30,12 @@ touch "src/days/$DAY_NAME/test.rs"
 cat > "src/days/$DAY_NAME/main.rs" <<EOF
 use crate::days::Day;
 
-fn part1(_data: Vec<String>) -> () {
-    let res = 0;
-    println!("{}", res);
+fn part1(_data: Vec<String>) -> u64 {
+    0;
 }
 
-fn part2(_data: Vec<String>) -> () {
-    let res = 0;
-    println!("{}", res);
+fn part2(_data: Vec<String>) -> u64 {
+		0;
 }
 
 pub fn functions() -> Day {
@@ -49,8 +47,11 @@ pub fn functions() -> Day {
 EOF
 
 cat > "src/days/$DAY_NAME/test.rs" <<EOF
+#[cfg(test)]
 use crate::util;
+#[cfg(test)]
 use std::path::PathBuf;
+#[cfg(test)]
 use crate::days;
 
 #[cfg(test)]
@@ -68,7 +69,7 @@ mod tests {
             if let Some(parsed_fns) = days::get_day(day) {
                 if let Some(part1_fn) = parsed_fns.part1 {
                     let result = part1_fn(get_data());
-                    assert_eq!(result, 11);
+                    assert_eq!(result, 1);
                     return
                 } 
 
@@ -87,7 +88,7 @@ mod tests {
             if let Some(parsed_fns) = days::get_day(day) {
                 if let Some(part2_fn) = parsed_fns.part2 {
                     let result = part2_fn(get_data());
-                    assert_eq!(result, 31);
+                    assert_eq!(result, 1);
                     return
                 } 
 

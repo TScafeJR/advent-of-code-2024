@@ -1,5 +1,8 @@
+#[cfg(test)]
 use crate::days;
+#[cfg(test)]
 use crate::util;
+#[cfg(test)]
 use std::path::PathBuf;
 
 #[cfg(test)]
@@ -36,7 +39,7 @@ mod tests {
             if let Some(parsed_fns) = days::get_day(day) {
                 if let Some(part2_fn) = parsed_fns.part2 {
                     let result = part2_fn(get_data());
-                    assert_eq!(result, 31);
+                    assert_eq!(result, 13);
                     return;
                 }
 
