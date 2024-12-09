@@ -6,10 +6,10 @@ Example run
 
 ```shell
 # run day x part x
-cargo run -- <day> <part>
+cargo run --release -- <day> <part>
 
 # run day x part x with test input
-cargo run -- <day> <part> --test
+cargo run --release -- <day> <part> --test
 ```
 
 Generate new day:
