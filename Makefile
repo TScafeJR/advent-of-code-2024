@@ -1,6 +1,5 @@
 .PHONY: fmt
-fmt:
-	@cargo fmt
+fmt: sh-fmt rust-fmt
 
 .PHONY: fix
 fix: fmt
@@ -10,7 +9,6 @@ gen-day:
 	@./scripts/gen-day
 
 .PHONY: test
-test:
-	@cargo test
+test: rust-test
 
 include makefiles/*.mk

@@ -2,32 +2,44 @@
 
 MOD_FILE="src/days/mod.rs"
 
-read -p "Enter day name: " -r DAY_NAME;
+read -p "Enter day name: " -r DAY_NAME
 
 if [[ -z "$DAY_NAME" ]]; then
-    echo "Day name cannot be empty!"
-    exit 1
+	echo "Day name cannot be empty!"
+	exit 1
 fi
 
-mkdir -p "src/days/$DAY_NAME/data" || { echo "Failed to create directory!"; exit 1; }
+mkdir -p "src/days/$DAY_NAME/data" || {
+	echo "Failed to create directory!"
+	exit 1
+}
 
-touch "src/days/$DAY_NAME/data/input.txt" || { echo "Failed to create input.txt"; exit 1; }
+touch "src/days/$DAY_NAME/data/input.txt" || {
+	echo "Failed to create input.txt"
+	exit 1
+}
 
-touch "src/days/$DAY_NAME/data/test.txt" || { echo "Failed to create test.txt"; exit 1; }
+touch "src/days/$DAY_NAME/data/test.txt" || {
+	echo "Failed to create test.txt"
+	exit 1
+}
 
-touch "src/days/$DAY_NAME/mod.rs" || { echo "Failed to create mod.rs"; exit 1; }
+touch "src/days/$DAY_NAME/mod.rs" || {
+	echo "Failed to create mod.rs"
+	exit 1
+}
 
-cat > "src/days/$DAY_NAME/mod.rs" <<EOF
+cat >"src/days/$DAY_NAME/mod.rs" <<EOF
 pub mod main;
 pub mod test;
 
 pub use main::functions;
 EOF
 
-touch "src/days/$DAY_NAME/main.rs" 
+touch "src/days/$DAY_NAME/main.rs"
 touch "src/days/$DAY_NAME/test.rs"
 
-cat > "src/days/$DAY_NAME/main.rs" <<EOF
+cat >"src/days/$DAY_NAME/main.rs" <<EOF
 use crate::days::Day;
 
 fn part1(_data: Vec<String>) -> u64 {
@@ -46,7 +58,7 @@ pub fn functions() -> Day {
 }
 EOF
 
-cat > "src/days/$DAY_NAME/test.rs" <<EOF
+cat >"src/days/$DAY_NAME/test.rs" <<EOF
 #[cfg(test)]
 use crate::util;
 #[cfg(test)]
@@ -107,26 +119,26 @@ mod tests {
 EOF
 
 if ! grep -q "pub mod $DAY_NAME;" "$MOD_FILE"; then
-    sed -i '' "1i\\
+	sed -i '' "1i\\
 pub mod $DAY_NAME;
 " "$MOD_FILE"
 fi
 
 if ! grep -q "\"$DAY_NAME\".to_string()" "$MOD_FILE"; then
-    sed -i '' "/pub fn get_day_str(day: u8) -> Option<String> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some(\"$DAY_NAME\".to_string()),\\
+	sed -i '' "/pub fn get_day_str(day: u8) -> Option<String> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some(\"$DAY_NAME\".to_string()),\\
         _ => None,/" "$MOD_FILE"
 fi
 
 if ! grep -q "$DAY_NAME::functions()" "$MOD_FILE"; then
-    sed -i '' "/pub fn get_day(day: u8) -> Option<Day> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some($DAY_NAME::functions()),\\
+	sed -i '' "/pub fn get_day(day: u8) -> Option<Day> {/,/}/ s/        _ => None,/        $(($(grep -c '^pub mod' "$MOD_FILE"))) => Some($DAY_NAME::functions()),\\
         _ => None,/" "$MOD_FILE"
 fi
 
 if ! grep -q "\"$DAY_NAME\" => Some(" "$MOD_FILE"; then
-    sed -i '' "/pub fn get_day_from_str(day: &str) -> Option<u8> {/,/}/ s/        _ => None,/        \"$DAY_NAME\" => Some($(($(grep -c '^pub mod' "$MOD_FILE")))),\\
+	sed -i '' "/pub fn get_day_from_str(day: &str) -> Option<u8> {/,/}/ s/        _ => None,/        \"$DAY_NAME\" => Some($(($(grep -c '^pub mod' "$MOD_FILE")))),\\
         _ => None,/" "$MOD_FILE"
 fi
 
-make fix;
+make fix
 
-git add "src/days/$DAY_NAME";
+git add "src/days/$DAY_NAME"
