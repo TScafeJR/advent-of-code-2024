@@ -41,6 +41,10 @@ impl Space {
     pub fn erase_file_space(&mut self) {
         self.file_spaces.pop();
     }
+
+    pub fn erase_open_space(&mut self) {
+        self.open_spaces.pop();
+    }
 }
 
 fn to_int(c: char) -> u16 {
@@ -97,30 +101,50 @@ fn should_stop(s: Vec<usize>, leading_zeros: usize) -> bool {
 
     let filtered = c.iter().filter(|&&x| x != 0).count();
 
-    return l == filtered + leading_zeros;
+    l == filtered + leading_zeros
 }
 
-fn count_concecutive_open_spaces(spaces: Vec<usize>, leading_zeros: usize) -> usize {
-    let mut res = 0;
-    let mut last_idx = 0;
+fn find_first_occurrence<T: PartialEq>(vec: Vec<T>, element: T) -> Option<usize> {
+    vec.iter().position(|x| *x == element)
+}
 
-    for i in leading_zeros..spaces.len() {
-        let idx = spaces[i];
+pub fn scan_for_open_spaces(
+    spaces: Vec<usize>,
+    leading_zeros: usize,
+    curr_num: usize,
+) -> Vec<(usize, usize)> {
+    let mut results = Vec::new();
+    let mut count = 0;
 
-        if last_idx != 0 {
-            if idx - last_idx != 1 {
+    if let Some(idx) = find_first_occurrence(spaces.clone(), curr_num) {
+        for (i, &val) in spaces.iter().enumerate() {
+            if i >= idx {
                 break;
+            }
+
+            if i < leading_zeros {
+                continue;
+            }
+
+            if val == 0 {
+                count += 1;
+            } else {
+                if count > 0 {
+                    results.push((i - count, count));
+                }
+                count = 0;
             }
         }
 
-        res += 1;
-        last_idx = idx;
+        if count > 0 {
+            results.push((idx - count, count));
+        }
     }
 
-    res
+    results
 }
 
-fn find_last_file_id(s: Vec<usize>) -> usize {
+pub fn find_last_file_id(s: Vec<usize>) -> usize {
     let c = s.clone();
     let mut res = 0;
 
@@ -172,42 +196,44 @@ fn part2(data: Vec<String>) -> u64 {
     let mut curr_file = find_last_file_id(space.spaces.clone());
 
     loop {
-        println!("file: {} - {:?}", curr_file, space.spaces);
         if curr_file == 0 || space.open_spaces.len() == 0 {
             break;
         }
 
         let occur = get_file_occur(&space.spaces, curr_file);
-        let leading_zeros =
-            count_concecutive_open_spaces(space.spaces.clone(), space.first_block_idx);
+        let occur_vec =
+            scan_for_open_spaces(space.spaces.clone(), space.first_block_idx, curr_file);
+        let mut moved_file_info = (false, 0);
 
-        println!(
-            "leading zeros: {}: {}",
-            leading_zeros, space.first_block_idx
-        );
+        for (idx, count) in occur_vec {
+            if occur <= count {
+                moved_file_info = (true, occur);
+                for i_idx in idx..(idx + occur) {
+                    let clean_up_idx = space.file_spaces.pop().unwrap();
 
-        let mut open_spaces = space.open_spaces.clone();
-        open_spaces.reverse();
+                    space.erase_open_space();
 
-        if occur <= leading_zeros {
-            for _ in 0..occur {
-                let idx = open_spaces.pop().unwrap();
-                let clean_up_idx = space.file_spaces.pop().unwrap();
-
-                let n = get_next_num(space.spaces.clone());
-
-                space.update_space_val(idx, n);
-                space.update_space_val(clean_up_idx, 0);
+                    space.update_space_val(i_idx, curr_file);
+                    space.update_space_val(clean_up_idx, 0);
+                }
+                break;
             }
-        } else {
+        }
+
+        if !moved_file_info.0 {
             for _ in 0..occur {
                 space.erase_file_space();
             }
         }
+
         curr_file -= 1;
     }
 
-    0
+    space
+        .spaces
+        .iter()
+        .enumerate()
+        .fold(0, |acc, (idx, &n)| acc + (idx as u64 * n as u64))
 }
 
 pub fn functions() -> Day {
