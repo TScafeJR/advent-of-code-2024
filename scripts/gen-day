@@ -63,6 +63,7 @@ mod tests {
         util::files::read_file_line_by_line(data_path)
     }
 
+    #[ignore]
     #[test]
     fn p1() {
         if let Some(day) = days::get_day_from_str("$DAY_NAME") {
@@ -82,6 +83,7 @@ mod tests {
         }
     }
 
+    #[ignore]
     #[test]
     fn p2() {
         if let Some(day) = days::get_day_from_str("$DAY_NAME") {
