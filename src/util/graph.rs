@@ -43,17 +43,15 @@ impl<T: Eq + std::hash::Hash + Clone + Debug> Graph<T> {
             .or_insert(Vec::new())
             .push(to.clone());
 
-        self.nodes
-            .entry(to.clone())
-            .or_insert(Vec::new())
-            .push(from.clone());
-
         self.nodes.entry(to).or_insert(Vec::new());
-        self.nodes.entry(from).or_insert(Vec::new());
     }
 
     pub fn outgoing_neighbors(&self, node: &T) -> Option<&Vec<T>> {
         self.nodes.get(node)
+    }
+
+    pub fn has_node(&self, node: T) -> bool {
+        self.nodes.contains_key(&node)
     }
 
     pub fn dfs_with_condition(
@@ -86,5 +84,29 @@ impl<T: Eq + std::hash::Hash + Clone + Debug> Graph<T> {
         }
 
         false
+    }
+
+    pub fn count_distinct_paths_with_condition(
+        &self,
+        start: &T,
+        end: &T,
+        condition: fn(s: &T, e: &T) -> bool,
+    ) -> u64 {
+        if start == end {
+            return 1;
+        }
+
+        let mut total = 0;
+        if let Some(neighbors) = self.outgoing_neighbors(start) {
+            for neighbor in neighbors {
+                if !condition(start, neighbor) {
+                    continue;
+                }
+
+                total += self.count_distinct_paths_with_condition(neighbor, end, condition);
+            }
+        }
+
+        total
     }
 }

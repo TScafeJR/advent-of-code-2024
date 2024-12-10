@@ -75,8 +75,32 @@ pub fn part1(data: Vec<String>) -> u64 {
     res as u64
 }
 
-fn part2(_data: Vec<String>) -> u64 {
-    0
+fn part2(data: Vec<String>) -> u64 {
+    let d: Vec<Vec<usize>> = data
+        .iter()
+        .map(|s| {
+            s.chars()
+                .map(|c| c.to_digit(10).expect("Invalid digit") as usize)
+                .collect()
+        })
+        .collect();
+
+    let mut g = graph::Graph::new();
+
+    populate_graph(&mut g, d);
+
+    let mut res = 0 as u64;
+
+    let heads = g.get_heads();
+    let tails = g.get_tails();
+
+    for h in heads {
+        for t in tails {
+            res += g.count_distinct_paths_with_condition(&h, &t, can_navigate);
+        }
+    }
+
+    res as u64
 }
 
 pub fn functions() -> Day {

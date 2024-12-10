@@ -1,5 +1,5 @@
 use crate::days::Day;
-use crate::util::directed_graph;
+use crate::util::graph;
 
 fn is_pair_row(row: &str) -> bool {
     row.contains("|")
@@ -12,10 +12,7 @@ fn process_pair_row(row: &str) -> (u64, u64) {
     (first, second)
 }
 
-fn simple_can_handle_row(
-    row: &str,
-    graph: &directed_graph::DirectedGraph<u64>,
-) -> (bool, Vec<String>) {
+fn simple_can_handle_row(row: &str, graph: &graph::Graph<u64>) -> (bool, Vec<String>) {
     let vals = row
         .split(",")
         .map(|x| x.to_string())
@@ -38,10 +35,7 @@ fn simple_can_handle_row(
     return (true, vals);
 }
 
-fn can_handle_row_and_fix_row(
-    row: &str,
-    graph: &directed_graph::DirectedGraph<u64>,
-) -> (bool, Vec<String>) {
+fn can_handle_row_and_fix_row(row: &str, graph: &graph::Graph<u64>) -> (bool, Vec<String>) {
     let mut vals = row
         .split(",")
         .map(|x| x.to_string())
@@ -75,11 +69,11 @@ fn grab_middle_element(row: Vec<String>) -> u64 {
 
 fn process_data(
     data: Vec<String>,
-    should_sum_row: fn(r: &str, g: &directed_graph::DirectedGraph<u64>) -> (bool, Vec<String>),
+    should_sum_row: fn(r: &str, g: &graph::Graph<u64>) -> (bool, Vec<String>),
 ) -> u64 {
     let mut processing_pairs = true;
     let mut curr = 0;
-    let mut directed_graph = directed_graph::DirectedGraph::new();
+    let mut directed_graph = graph::Graph::new();
 
     while processing_pairs {
         let row = &data[curr];
