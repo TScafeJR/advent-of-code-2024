@@ -46,6 +46,12 @@ impl<T: Eq + std::hash::Hash + Clone + Debug> Graph<T> {
         self.nodes.entry(to).or_insert(Vec::new());
     }
 
+    #[cfg(test)]
+    pub fn add_bidirectional_edge(&mut self, from: T, to: T) {
+        self.add_edge(from.clone(), to.clone());
+        self.add_edge(to, from);
+    }
+
     pub fn outgoing_neighbors(&self, node: &T) -> Option<&Vec<T>> {
         self.nodes.get(node)
     }
