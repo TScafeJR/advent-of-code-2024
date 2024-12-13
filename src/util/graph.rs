@@ -60,6 +60,13 @@ impl<T: Eq + std::hash::Hash + Clone + Debug> Graph<T> {
         self.nodes.contains_key(&node)
     }
 
+    pub fn find_node(&self, node: T) -> Option<T> {
+        match self.nodes.get(&node) {
+            Some(_) => Some(node),
+            None => None,
+        }
+    }
+
     pub fn dfs_with_condition(
         &self,
         start: &T,
@@ -114,5 +121,19 @@ impl<T: Eq + std::hash::Hash + Clone + Debug> Graph<T> {
         }
 
         total
+    }
+
+    pub fn concat(&mut self, other: &Graph<T>) {
+        let new_nodes = other.nodes.clone();
+        let new_heads = other.heads_of_graph.clone();
+        let new_tails = other.tails_of_graph.clone();
+
+        self.nodes.extend(new_nodes);
+        self.heads_of_graph.extend(new_heads);
+        self.tails_of_graph.extend(new_tails);
+    }
+
+    pub fn size(&self) -> usize {
+        self.nodes.len()
     }
 }
