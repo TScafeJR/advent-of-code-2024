@@ -73,18 +73,10 @@ fn handle_step(data: &mut Vec<Vec<char>>, curr_loc: (usize, usize)) -> bool {
         Direction::RIGHT => (curr_loc.0, curr_loc.1 + 1),
     };
 
-    let next_char = match direction_info.direction {
-        Direction::UP => data[next_loc.0][next_loc.1],
-        Direction::DOWN => data[next_loc.0][next_loc.1],
-        Direction::LEFT => data[next_loc.0][next_loc.1],
-        Direction::RIGHT => data[next_loc.0][next_loc.1],
-    };
+    let next_char = data[next_loc.0][next_loc.1];
 
     match next_char {
-        '#' => {
-            data[curr_loc.0][curr_loc.1] = direction_info.turn_direction_char;
-        }
-        'O' => {
+        '#' | 'O' => {
             data[curr_loc.0][curr_loc.1] = direction_info.turn_direction_char;
         }
         '.' => {
