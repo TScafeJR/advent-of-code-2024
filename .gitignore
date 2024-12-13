@@ -2,5 +2,3 @@ target/
 debug/
 
 **/*.rs.bk
-
-src/days/**/data
