@@ -3,10 +3,10 @@ use crate::util::arrays;
 use crate::util::graph;
 use std::collections::HashSet;
 
-type Point = (usize, usize);
+type Point = (isize, isize);
 
-pub fn calculate_perimeter(points: &[(usize, usize)]) -> usize {
-    let points_set: HashSet<(usize, usize)> = points.iter().cloned().collect();
+pub fn calculate_perimeter(points: &[Point]) -> isize {
+    let points_set: HashSet<Point> = points.iter().cloned().collect();
     let mut perimeter = 0;
 
     for &(x, y) in points {
@@ -23,24 +23,56 @@ pub fn calculate_perimeter(points: &[(usize, usize)]) -> usize {
     perimeter
 }
 
-pub fn calculate_sides(points: &[(usize, usize)]) -> usize {
-    let points_set: HashSet<(usize, usize)> = points.iter().cloned().collect();
-    let mut corners = HashSet::new();
+pub fn calculate_sides(points: &[Point]) -> isize {
+    if points.len() < 3 {
+        return 4;
+    }
+
+    let mut edges = HashSet::new();
+    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)];
 
     for &(x, y) in points {
-        let top_left = (x, y);
-        let top_right = (x + 1, y);
-        let bottom_left = (x, y + 1);
-        let bottom_right = (x + 1, y + 1);
-
-        for corner in [top_left, top_right, bottom_left, bottom_right] {
-            if !corners.insert(corner) {
-                corners.remove(&corner);
+        for (idx, (dx, dy)) in directions.iter().enumerate() {
+            let next = (x + dx, y + dy);
+            if !points.contains(&next) {
+                edges.insert((x, y, idx));
             }
         }
     }
 
-    corners.len()
+    let mut visited_edges = HashSet::new();
+    let mut sides = 0;
+
+    for &(x, y, dir) in &edges {
+        if visited_edges.contains(&(x, y, dir)) {
+            continue;
+        }
+
+        sides += 1;
+        let mut stack = vec![(x, y, dir)];
+
+        while let Some((cx, cy, cdir)) = stack.pop() {
+            if visited_edges.contains(&(cx, cy, cdir)) {
+                continue;
+            }
+            visited_edges.insert((cx, cy, cdir));
+
+            let perp_dirs = match cdir {
+                0 | 2 => [(1, 0), (-1, 0)],
+                1 | 3 => [(0, 1), (0, -1)],
+                _ => unreachable!(),
+            };
+
+            for &(dx, dy) in &perp_dirs {
+                let next = (cx + dx, cy + dy, cdir);
+                if edges.contains(&next) && !visited_edges.contains(&next) {
+                    stack.push(next);
+                }
+            }
+        }
+    }
+
+    sides
 }
 
 fn find_siblings(
@@ -51,18 +83,18 @@ fn find_siblings(
     g: &mut graph::Graph<(Point, char)>,
     visited: &mut HashSet<Point>,
 ) {
-    if visited.contains(&(i, j)) {
+    if visited.contains(&(i as isize, j as isize)) {
         return;
     }
 
-    visited.insert((i, j));
+    visited.insert((i as isize, j as isize));
 
     if data[i as usize][j as usize] != c {
         return;
     }
 
     if data[i][j] == c {
-        g.add_node(((i as usize, j as usize), c));
+        g.add_node(((i as isize, j as isize), c));
 
         if i > 0 {
             find_siblings(data, c, i - 1, j, g, visited);
@@ -82,7 +114,7 @@ fn find_siblings(
     }
 }
 
-fn calculate_price(data: Vec<String>, calc_method: fn(&[(usize, usize)]) -> usize) -> u64 {
+fn calculate_price(data: Vec<String>, calc_method: fn(&[Point]) -> isize) -> u64 {
     let converted_data: Vec<Vec<char>> =
         data.iter().map(|l| arrays::convert_str_to_vec(l)).collect();
 
@@ -91,7 +123,7 @@ fn calculate_price(data: Vec<String>, calc_method: fn(&[(usize, usize)]) -> usiz
     for i in 0..converted_data.len() {
         for j in 0..converted_data[i].len() {
             let mut graph = graph::Graph::new();
-            let node = ((i, j), converted_data[i][j]);
+            let node = ((i as isize, j as isize), converted_data[i][j]);
             graph.add_node(node);
             let v = &mut HashSet::new();
 
@@ -116,7 +148,8 @@ fn calculate_price(data: Vec<String>, calc_method: fn(&[(usize, usize)]) -> usiz
     graphs
         .iter()
         .map(|g| {
-            let perimeter = calc_method(&g.nodes.keys().map(|n| n.0).collect::<Vec<Point>>());
+            let perimeter =
+                calc_method(&g.nodes.keys().map(|n| n.0).collect::<Vec<Point>>()) as usize;
             let area = g.size();
             (perimeter * area) as u64
         })
