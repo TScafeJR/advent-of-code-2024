@@ -1,6 +1,8 @@
 #[cfg(test)]
 use crate::days;
 #[cfg(test)]
+use crate::days::thirteen;
+#[cfg(test)]
 use crate::util;
 #[cfg(test)]
 use std::path::PathBuf;
@@ -12,6 +14,30 @@ mod tests {
     fn get_data() -> Vec<String> {
         let data_path = PathBuf::from(format!("src/days/{}/data/test.txt", "thirteen"));
         util::files::read_file_line_by_line(data_path)
+    }
+
+    #[test]
+    fn test_prize_quick() {
+        let prize = thirteen::main::Prize {
+            button_a: (17, 86),
+            button_b: (84, 37),
+            prize: (7870, 6450),
+        };
+
+        let presses = thirteen::main::calculate_presses(&prize);
+        assert_eq!(presses, 200);
+    }
+
+    #[test]
+    fn test_prize() {
+        let prize = thirteen::main::Prize {
+            button_a: (94, 34),
+            button_b: (22, 67),
+            prize: (8400, 5400),
+        };
+
+        let presses = thirteen::main::calculate_presses(&prize);
+        assert_eq!(presses, 280);
     }
 
     #[test]
