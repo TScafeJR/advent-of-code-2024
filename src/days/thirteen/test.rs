@@ -14,14 +14,13 @@ mod tests {
         util::files::read_file_line_by_line(data_path)
     }
 
-    #[ignore]
     #[test]
     fn p1() {
         if let Some(day) = days::get_day_from_str("thirteen") {
             if let Some(parsed_fns) = days::get_day(day) {
                 if let Some(part1_fn) = parsed_fns.part1 {
                     let result = part1_fn(get_data());
-                    assert_eq!(result, 1);
+                    assert_eq!(result, 480);
                     return;
                 }
 
