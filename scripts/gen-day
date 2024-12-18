@@ -2,30 +2,34 @@
 
 MOD_FILE="src/days/mod.rs"
 
+err_print() {
+	echo -e "\033[31m$1\033[0m" 1>&2
+}
+
 read -p "Enter day name: " -r DAY_NAME
 
 if [[ -z "$DAY_NAME" ]]; then
-	echo "Day name cannot be empty!"
+	err_print "Day name cannot be empty!"
 	exit 1
 fi
 
 mkdir -p "src/days/$DAY_NAME/data" || {
-	echo "Failed to create directory!"
+	err_print "Failed to create directory!"
 	exit 1
 }
 
 touch "src/days/$DAY_NAME/data/input.txt" || {
-	echo "Failed to create input.txt"
+	err_print "Failed to create input.txt"
 	exit 1
 }
 
 touch "src/days/$DAY_NAME/data/test.txt" || {
-	echo "Failed to create test.txt"
+	err_print "Failed to create test.txt"
 	exit 1
 }
 
 touch "src/days/$DAY_NAME/mod.rs" || {
-	echo "Failed to create mod.rs"
+	err_print "Failed to create mod.rs"
 	exit 1
 }
 
