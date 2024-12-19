@@ -2,6 +2,7 @@ pub mod eight;
 pub mod eleven;
 pub mod five;
 pub mod four;
+pub mod fourteen;
 pub mod nine;
 pub mod one;
 pub mod seven;
@@ -33,6 +34,7 @@ pub fn get_day_from_str(day: &str) -> Option<u8> {
         "eleven" => Some(11),
         "twelve" => Some(12),
         "thirteen" => Some(13),
+        "fourteen" => Some(14),
         _ => None,
     }
 }
@@ -52,6 +54,7 @@ pub fn get_day_str(day: u8) -> Option<String> {
         11 => Some("eleven".to_string()),
         12 => Some("twelve".to_string()),
         13 => Some("thirteen".to_string()),
+        14 => Some("fourteen".to_string()),
         _ => None,
     }
 }
@@ -71,6 +74,7 @@ pub fn get_day(day: u8) -> Option<Day> {
         11 => Some(eleven::functions()),
         12 => Some(twelve::functions()),
         13 => Some(thirteen::functions()),
+        14 => Some(fourteen::functions()),
         _ => None,
     }
 }
